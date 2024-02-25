@@ -1,15 +1,24 @@
 <script lang="ts">
 	let email = '';
 	let emailError = false;
+	let successEmail = false;
 
 	// function to check if the email is valid
 	const onSubscribe = () => {
+		// if the email is not valid, set emailError to true
 		let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 		if (!email || !emailRegex.test(email)) {
 			emailError = true;
 			return;
 		}
+		// else show the success message and reset the emailError
 		emailError = false;
+		successEmail = true;
+		setTimeout(() => {
+			successEmail = false;
+			email = '';
+		}, 3000);
+		// send the email to the server for newsletter subscription
 	};
 </script>
 
@@ -37,6 +46,11 @@
 	{#if emailError}
 		<div class=" flex flex-1 justify-center text-red-500 mt-2">
 			<p>Please enter a valid email address.</p>
+		</div>
+	{/if}
+	{#if successEmail}
+		<div class=" flex flex-1 justify-center text-green-500 mt-2">
+			<p>Thank you for subscribing!</p>
 		</div>
 	{/if}
 
